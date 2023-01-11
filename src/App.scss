@@ -1,0 +1,242 @@
+$color: (
+    main: #28d1e0,
+    minor: #f7f6f2,
+    bg: #1a202e,
+);
+
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+.grid{
+  display: flex;
+  gap: 15px;
+  flex-direction: column;
+}
+
+.grid__row{
+  display: flex;
+  gap: 15px;
+  justify-content: space-evenly;
+	align-items: center;
+}
+
+.grid__card{
+  height: 12vw;
+  width: 12vw;
+  background-color: white;
+  color: navy;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.3rem;
+  cursor: pointer;
+
+  @media screen and (max-width: 980px) {
+    width: 16vw;
+    height: 16vw;
+  }
+}
+
+.grid__card.revealed{
+  background-color: rgb(0, 194, 0);
+  color: white;
+  cursor: not-allowed;
+}
+.grid__card.revealed:hover{
+  background-color: rgb(0, 194, 0);
+}
+
+.grid__card.wrong{
+  background-color: rgb(194, 0, 0);
+  color: white;
+  cursor: not-allowed;
+}
+.grid__card.wrong:hover{
+  background-color: rgb(194, 0, 0);
+}
+
+
+.grid__card:hover{
+  background-color: rgb(206, 206, 206);
+}
+
+.congrats{
+    position: relative;
+	top: -10vh;
+
+    h1{
+        font-size: 4rem;
+        color: white;
+        text-shadow: 2px 2px 1px map-get($color, main);
+    }
+
+    button{
+        background-color: #28d1e0;
+        color: black;
+        box-shadow: 3px 3px 0px black;
+    }
+}
+
+
+
+
+$particles: 50;
+$width: 500;
+$height: 300;
+$gravityY: 150;
+$frequency: infinite;
+
+$box-shadow: ();
+$box-shadow2: ();
+@for $i from 0 through $particles {
+    $box-shadow: $box-shadow,
+        random($width)-$width /
+            2 +
+            px
+            random($height)-$height /
+            1.2 +
+            px
+            hsl(random(360), 100, 50);
+    $box-shadow2: $box-shadow2, 0 0 #fff;
+}
+@mixin keyframes($animationName) {
+    @-webkit-keyframes #{$animationName} {
+        @content;
+    }
+
+    @-moz-keyframes #{$animationName} {
+        @content;
+    }
+
+    @-o-keyframes #{$animationName} {
+        @content;
+    }
+
+    @-ms-keyframes #{$animationName} {
+        @content;
+    }
+
+    @keyframes #{$animationName} {
+        @content;
+    }
+}
+
+@mixin animation-delay($settings) {
+    -moz-animation-delay: $settings;
+    -webkit-animation-delay: $settings;
+    -o-animation-delay: $settings;
+    -ms-animation-delay: $settings;
+    animation-delay: $settings;
+}
+
+@mixin animation-duration($settings) {
+    -moz-animation-duration: $settings;
+    -webkit-animation-duration: $settings;
+    -o-animation-duration: $settings;
+    -ms-animation-duration: $settings;
+    animation-duration: $settings;
+}
+
+@mixin animation($settings) {
+    -moz-animation: $settings;
+    -webkit-animation: $settings;
+    -o-animation: $settings;
+    -ms-animation: $settings;
+    animation: $settings;
+}
+
+@mixin transform($settings) {
+    transform: $settings;
+    -moz-transform: $settings;
+    -webkit-transform: $settings;
+    -o-transform: $settings;
+    -ms-transform: $settings;
+}
+
+.fireworks {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+}
+.fireworks > .before,
+.fireworks > .after {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    box-shadow: $box-shadow2;
+    @include animation-delay((0.5s, 0.5s, 0.5s));
+    @include animation(
+        (
+            1s bang ease-out 1s $frequency backwards,
+            1s gravity ease-in 1s $frequency backwards,
+            5s position linear 1s $frequency backwards
+        )
+    );
+}
+
+.fireworks > .after {
+    @include animation-delay((1s, 1s, 1s));
+    @include animation-duration((1s, 1s, 6s));
+}
+
+@include keyframes(bang) {
+    to {
+        box-shadow: $box-shadow;
+    }
+}
+
+@include keyframes(gravity) {
+    to {
+        @include transform(translateY($gravityY + px));
+        opacity: 0;
+    }
+}
+
+@include keyframes(position) {
+    0%,
+    19.9% {
+        margin-top: 10%;
+        margin-left: 40%;
+    }
+    20%,
+    39.9% {
+        margin-top: 40%;
+        margin-left: 30%;
+    }
+    40%,
+    59.9% {
+        margin-top: 20%;
+        margin-left: 70%;
+    }
+    60%,
+    79.9% {
+        margin-top: 30%;
+        margin-left: 20%;
+    }
+    80%,
+    99.9% {
+        margin-top: 30%;
+        margin-left: 80%;
+    }
+}
+@keyframes moveYear {
+    100% {
+        transform: translateY(-137px);
+    }
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    color: inherit;
+    list-style: none;
+}
