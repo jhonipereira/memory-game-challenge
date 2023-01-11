@@ -8,7 +8,7 @@ interface TCell{
 
 function App() {
 
-  const [grid, setGrid] = useState<number[]>([
+  const [grid, setGrid] = useState<any[]>([
     [1,2,0,1],
     [3,1,3,1],
     [2,2,2,0],
@@ -89,7 +89,7 @@ function App() {
       }
       <div className="grid">
       { grid.map((row, rowindex) => <div className='grid__row' key={rowindex}>
-        { row.map((number, numberIndex) => 
+        { row.map((number:number, numberIndex:number) => 
           <div 
           className={'grid__card '
            + ((isMatched!=undefined && isMatched[rowindex][numberIndex]===true) ? 'revealed' : '')
